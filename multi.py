@@ -45,7 +45,7 @@ def main():
             else:
                 print("Too many directories in command line")
 
-    filenames = (f for f in os.listdir(target_dir) if re.match(r'[^ ]*\.[^ ]*', f))
+    filenames = [f for f in os.listdir(target_dir) if re.match(r'[^ ]*\.[^ ]*', f)]
     make_command = ['make', '-B', '-f', '-', parallel]
 
     makefile = ('TARGETS := %s\nall: $(TARGETS)\n$(TARGETS):%%:\n\t%s' %
