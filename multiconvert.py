@@ -1,18 +1,18 @@
 #!/usr/bin/python
+"""
+multiconvert.py -- run convert(1) on multiple files in a directory.
+The script accepts the same parameters as convert(1), except the input-file
+and output-file must name existing directories instead of files.
+The script accepts an additional parameter -jn, where n is the parallellism,
+which is passed on to make(1) to run convert(1) in parallel.
 
-## Author: Mathias Rav
-## Date: November 2013
+For example, the following command will resize images in the directory
+`Pictures` by 50%, storing the result in `Resized`, resizing up to
+four images at a time:
+    multiconvert.py -j4 Pictures -resize 50% Resized
 
-## multiconvert.py -- run convert(1) on multiple files in a directory.
-## The script accepts the same parameters as convert(1), except the input-file
-## and output-file must name existing directories instead of files.
-## The script accepts an additional parameter -jn, where n is the parallellism,
-## which is passed on to make(1) to run convert(1) in parallel.
-
-## For example, the following command will resize images in the directory
-## `Pictures` by 50%, storing the result in `Resized`, resizing up to
-## four images at a time:
-##     multiconvert.py -j4 Pictures -resize 50% Resized
+Mathias Rav, November 2013
+"""
 
 import os
 import re
