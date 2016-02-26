@@ -54,10 +54,10 @@ def main():
                 (' '.join(filenames),
                  ' '.join(args)))
 
-    returncode = subprocess.call(
-        make_command, stdin=makefile.encode('utf8'), cwd=target_dir)
-    if returncode:
-        raise SystemExit(returncode)
+    status = subprocess.run(
+        make_command, input=makefile.encode('utf8'), cwd=target_dir)
+    if status.returncode:
+        raise SystemExit(status.returncode)
 
 
 if __name__ == "__main__":

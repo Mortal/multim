@@ -115,8 +115,8 @@ def main():
                  input_dir_relative_to_output_dir,
                  ' '.join(convert_command)))
 
-    returncode = subprocess.call(
-        make_command, stdin=makefile.encode('utf8'), cwd=output_dir)
+    returncode = subprocess.run(
+        make_command, input=makefile.encode('utf8'), cwd=output_dir)
     if returncode:
         raise SystemExit(returncode)
 
