@@ -61,56 +61,61 @@ SINGLE_ARG = """
 """.split()
 
 
-skip_next = False
-args = list(sys.argv[1:])
-inputs_seen = 0
-parallel = '-j1'
-input_dir = None
-output_dir = None
+def main():
+    skip_next = False
+    args = list(sys.argv[1:])
+    inputs_seen = 0
+    parallel = '-j1'
+    input_dir = None
+    output_dir = None
 
-for i in range(len(args)):
-    arg = args[i]
-    if skip_next:
-        skip_next = False
-        continue
-    if arg in SINGLE_ARG:
-        skip_next = True
-        continue
-    if arg in NO_ARG:
-        continue
-    if re.match(r'-j[0-9]*', arg):
-        parallel = arg
-        args[i] = ''
-        continue
-    try:
-        st = os.stat(arg)
-    except FileNotFoundError:
-        continue
+    for i in range(len(args)):
+        arg = args[i]
+        if skip_next:
+            skip_next = False
+            continue
+        if arg in SINGLE_ARG:
+            skip_next = True
+            continue
+        if arg in NO_ARG:
+            continue
+        if re.match(r'-j[0-9]*', arg):
+            parallel = arg
+            args[i] = ''
+            continue
+        try:
+            st = os.stat(arg)
+        except FileNotFoundError:
+            continue
 
-    if stat.S_ISDIR(st.st_mode):
-        if inputs_seen == 0:
-            # Input
-            input_dir = arg
-            args[i] = '$<'
-        elif inputs_seen == 1:
-            # Output
-            output_dir = arg
-            args[i] = '$@'
-        else:
-            print("Too many directories in command line")
+        if stat.S_ISDIR(st.st_mode):
+            if inputs_seen == 0:
+                # Input
+                input_dir = arg
+                args[i] = '$<'
+            elif inputs_seen == 1:
+                # Output
+                output_dir = arg
+                args[i] = '$@'
+            else:
+                print("Too many directories in command line")
 
-        inputs_seen += 1
+            inputs_seen += 1
 
-filenames = (f for f in os.listdir(input_dir) if re.match(r'[^ ]*\.[^ ]*', f))
-make_command = ['make', '-f', '-', parallel]
-convert_command = ['convert'] + args
-input_dir_relative_to_output_dir = os.path.relpath(input_dir, start=output_dir)
+    filenames = (f for f in os.listdir(input_dir) if re.match(r'[^ ]*\.[^ ]*', f))
+    make_command = ['make', '-f', '-', parallel]
+    convert_command = ['convert'] + args
+    input_dir_relative_to_output_dir = os.path.relpath(input_dir, start=output_dir)
 
-makefile = ('INPUTS := %s\nall: $(INPUTS)\n$(INPUTS):%%: %s/%%\n\t%s' %
-            (' '.join(filenames),
-             input_dir_relative_to_output_dir,
-             ' '.join(convert_command)))
+    makefile = ('INPUTS := %s\nall: $(INPUTS)\n$(INPUTS):%%: %s/%%\n\t%s' %
+                (' '.join(filenames),
+                 input_dir_relative_to_output_dir,
+                 ' '.join(convert_command)))
 
-with subprocess.Popen(make_command, stdin=subprocess.PIPE, cwd=output_dir) as proc:
-    proc.communicate(makefile.encode('utf8'))
-    proc.wait()
+    with subprocess.Popen(make_command, stdin=subprocess.PIPE, cwd=output_dir) as proc:
+        proc.communicate(makefile.encode('utf8'))
+        proc.wait()
+
+
+if __name__ == "__main__":
+    main()
