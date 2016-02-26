@@ -102,7 +102,9 @@ def main():
 
             inputs_seen += 1
 
-    filenames = [f for f in os.listdir(input_dir) if re.match(r'[^ ]*\.[^ ]*', f)]
+    filenames = [
+        f for f in os.listdir(input_dir)
+        if re.match(r'[^ ]*\.[^ ]*', f)]
     make_command = ['make', '-f', '-', parallel]
     convert_command = ['convert'] + args
     input_dir_relative_to_output_dir = os.path.relpath(input_dir, start=output_dir)
