@@ -46,7 +46,9 @@ for i in range(len(args)):
 filenames = (f for f in os.listdir(target_dir) if re.match(r'[^ ]*\.[^ ]*', f))
 make_command = ['make', '-B', '-f', '-', parallel]
 
-makefile = 'TARGETS := '+(' '.join(filenames))+'\nall: $(TARGETS)\n$(TARGETS):%:\n\t'+(' '.join(args))
+makefile = ('TARGETS := %s\nall: $(TARGETS)\n$(TARGETS):%%:\n\t%s' %
+            (' '.join(filenames),
+             ' '.join(args)))
 
 with subprocess.Popen(make_command, stdin=subprocess.PIPE, cwd=target_dir) as proc:
     proc.communicate(makefile.encode('utf8'))
