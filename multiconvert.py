@@ -107,7 +107,8 @@ def main():
         if re.match(r'[^ ]*\.[^ ]*', f)]
     make_command = ['make', '-f', '-', parallel]
     convert_command = ['convert'] + args
-    input_dir_relative_to_output_dir = os.path.relpath(input_dir, start=output_dir)
+    input_dir_relative_to_output_dir = os.path.relpath(
+        input_dir, start=output_dir)
 
     makefile = ('INPUTS := %s\nall: $(INPUTS)\n$(INPUTS):%%: %s/%%\n\t%s' %
                 (' '.join(filenames),
