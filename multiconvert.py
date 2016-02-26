@@ -112,9 +112,10 @@ def main():
                  input_dir_relative_to_output_dir,
                  ' '.join(convert_command)))
 
-    with subprocess.Popen(make_command, stdin=subprocess.PIPE, cwd=output_dir) as proc:
-        proc.communicate(makefile.encode('utf8'))
-        proc.wait()
+    returncode = subprocess.call(
+        make_command, stdin=makefile.encode('utf8'), cwd=output_dir)
+    if returncode:
+        raise SystemExit(returncode)
 
 
 if __name__ == "__main__":
