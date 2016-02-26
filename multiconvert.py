@@ -106,7 +106,10 @@ make_command = ['make', '-f', '-', parallel]
 convert_command = ['convert'] + args
 input_dir_relative_to_output_dir = os.path.relpath(input_dir, start=output_dir)
 
-makefile = 'INPUTS := '+(' '.join(filenames))+'\nall: $(INPUTS)\n$(INPUTS):%: '+input_dir_relative_to_output_dir+'/%\n\t'+(' '.join(convert_command))
+makefile = ('INPUTS := %s\nall: $(INPUTS)\n$(INPUTS):%%: %s/%%\n\t%s' %
+            (' '.join(filenames),
+             input_dir_relative_to_output_dir,
+             ' '.join(convert_command)))
 
 with subprocess.Popen(make_command, stdin=subprocess.PIPE, cwd=output_dir) as proc:
     proc.communicate(makefile.encode('utf8'))
