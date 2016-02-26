@@ -1,19 +1,19 @@
 #!/usr/bin/python
+"""
+multi.py -- run a command on multiple files in a directory.
+The script treats the argument list as a command line to run.
+The first argument that matches the regex -j[0-9]* is removed from the
+argument list and treated as a GNU make parameter instead.
+The first argument that names an existing directory is replaced by the list
+of files in that directory, and is run with make.
 
-## Author: Mathias Rav
-## Date: November 2013
+For example, the following command will rotate images in the directory
+`Pictures` according to their Exif orientation tag, processing up to
+four files at a time:
+    multi.py -j4 jhead -autorot Pictures
 
-## multi.py -- run a command on multiple files in a directory.
-## The script treats the argument list as a command line to run.
-## The first argument that matches the regex -j[0-9]* is removed from the
-## argument list and treated as a GNU make parameter instead.
-## The first argument that names an existing directory is replaced by the list
-## of files in that directory, and is run with make.
-
-## For example, the following command will rotate images in the directory
-## `Pictures` according to their Exif orientation tag, processing up to
-## four files at a time:
-##     multi.py -j4 jhead -autorot Pictures
+Mathias Rav, November 2013
+"""
 
 import os
 import re
