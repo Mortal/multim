@@ -52,9 +52,10 @@ def main():
                 (' '.join(filenames),
                  ' '.join(args)))
 
-    with subprocess.Popen(make_command, stdin=subprocess.PIPE, cwd=target_dir) as proc:
-        proc.communicate(makefile.encode('utf8'))
-        proc.wait()
+    returncode = subprocess.call(
+        make_command, stdin=makefile.encode('utf8'), cwd=target_dir)
+    if returncode:
+        raise SystemExit(returncode)
 
 
 if __name__ == "__main__":
