@@ -21,52 +21,44 @@ import subprocess
 import sys
 
 
-NO_ARG = ('-adjoin', '-antialias', '-append', '-auto-gamma', '-auto-level',
-'-auto-orient', '-black-point-compensation', '-clamp', '-clip', '-clip',
-'-clut', '-coalesce', '-combine', '-compare', '-composite', '-contrast',
-'-deconstruct', '-despeckle', '-enhance', '-equalize', '-fft', '-flatten',
-'-flatten', '-flip', '-flop', '-hald-clut', '-help', '-identify', '-ift',
-'-magnify', '-matte', '-monitor', '-monochrome', '-mosaic', '-negate',
-'-normalize', '-ping', '-quiet', '-regard-warnings', '-render',
-'-respect-parentheses', '-reverse', '-separate', '-strip', '-synchronize',
-'-taint', '-transform', '-transpose', '-transverse', '-trim', '-unique-colors',
-'-verbose', '-version', '-view',)
+NO_ARG = """
+-adjoin -antialias -append -auto-gamma -auto-level -auto-orient
+-black-point-compensation -clamp -clip -clip -clut -coalesce -combine -compare
+-composite -contrast -deconstruct -despeckle -enhance -equalize -fft -flatten
+-flatten -flip -flop -hald-clut -help -identify -ift -magnify -matte -monitor
+-monochrome -mosaic -negate -normalize -ping -quiet -regard-warnings -render
+-respect-parentheses -reverse -separate -strip -synchronize -taint -transform
+-transpose -transverse -trim -unique-colors -verbose -version -view
+""".split()
 
 
-SINGLE_ARG = ( '-adaptive-blur', '-adaptive-resize', '-adaptive-sharpen',
-'-affine', '-alpha', '-annotate', '-attenuate', '-authenticate', '-background',
-'-bench', '-bias', '-black-threshold', '-blue-primary', '-blue-shift', '-blur',
-'-border', '-bordercolor', '-brightness-contrast', '-caption', '-cdl',
-'-channel', '-charcoal', '-chop', '-clip-mask', '-clip-mask', '-clip-path',
-'-clip-path', '-clone', '-color-matrix', '-colorize', '-colors', '-colorspace',
-'-comment', '-complex', '-compose', '-compress', '-contrast-stretch',
-'-convolve', '-crop', '-cycle', '-debug', '-decipher', '-define', '-delay',
-'-delete', '-density', '-depth', '-deskew', '-direction', '-display',
-'-dispose', '-distort', '-distribute-cache', '-dither', '-draw', '-duplicate',
-'-edge', '-emboss', '-encipher', '-encoding', '-endian', '-evaluate',
-'-evaluate-sequence', '-extent', '-extract', '-family', '-features', '-fill',
-'-filter', '-floodfill', '-font', '-format', '-frame', '-function', '-fuzz',
-'-fx', '-gamma', '-gaussian-blur', '-geometry', '-gravity', '-grayscale',
-'-green-primary', '-implode', '-insert', '-intensity', '-intent', '-interlace',
-'-interline-spacing', '-interpolate', '-interpolative-resize',
-'-interword-spacing', '-kerning', '-label', '-lat', '-layers', '-level',
-'-level-colors', '-limit', '-linear-stretch', '-liquid-rescale', '-list',
-'-log', '-loop', '-mask', '-mattecolor', '-median', '-metric', '-mode',
-'-modulate', '-morph', '-morphology', '-motion-blur', '-noise', '-opaque',
-'-ordered-dither', '-orient', '-page', '-paint', '-perceptible', '-pointsize',
-'-polaroid', '-poly', '-posterize', '-precision', '-preview', '-print',
-'-process', '-profile', '-quality', '-quantize', '-radial-blur', '-raise',
-'-random-threshold', '-red-primary', '-region', '-remap', '-repage',
-'-resample', '-resize', '-roll', '-rotate', '-sample', '-sampling-factor',
-'-scale', '-scene', '-seed', '-segment', '-selective-blur', '-sepia-tone',
-'-set', '-shade', '-shadow', '-sharpen', '-shave', '-shear',
-'-sigmoidal-contrast', '-size', '-sketch', '-smush', '-solarize',
-'-sparse-color', '-splice', '-spread', '-statistic', '-stretch', '-stroke',
-'-strokewidth', '-style', '-support', '-swap', '-swirl', '-texture',
-'-threshold', '-thumbnail', '-tile', '-tile-offset', '-tint', '-transparent',
-'-transparent-color', '-treedepth', '-type', '-undercolor', '-units',
-'-unsharp', '-vignette', '-virtual-pixel', '-wave', '-weight', '-white-point',
-'-white-threshold', '-write',)
+SINGLE_ARG = """
+-adaptive-blur -adaptive-resize -adaptive-sharpen -affine -alpha -annotate
+-attenuate -authenticate -background -bench -bias -black-threshold
+-blue-primary -blue-shift -blur -border -bordercolor -brightness-contrast
+-caption -cdl -channel -charcoal -chop -clip-mask -clip-mask -clip-path
+-clip-path -clone -color-matrix -colorize -colors -colorspace -comment -complex
+-compose -compress -contrast-stretch -convolve -crop -cycle -debug -decipher
+-define -delay -delete -density -depth -deskew -direction -display -dispose
+-distort -distribute-cache -dither -draw -duplicate -edge -emboss -encipher
+-encoding -endian -evaluate -evaluate-sequence -extent -extract -family
+-features -fill -filter -floodfill -font -format -frame -function -fuzz -fx
+-gamma -gaussian-blur -geometry -gravity -grayscale -green-primary -implode
+-insert -intensity -intent -interlace -interline-spacing -interpolate
+-interpolative-resize -interword-spacing -kerning -label -lat -layers -level
+-level-colors -limit -linear-stretch -liquid-rescale -list -log -loop -mask
+-mattecolor -median -metric -mode -modulate -morph -morphology -motion-blur
+-noise -opaque -ordered-dither -orient -page -paint -perceptible -pointsize
+-polaroid -poly -posterize -precision -preview -print -process -profile
+-quality -quantize -radial-blur -raise -random-threshold -red-primary -region
+-remap -repage -resample -resize -roll -rotate -sample -sampling-factor -scale
+-scene -seed -segment -selective-blur -sepia-tone -set -shade -shadow -sharpen
+-shave -shear -sigmoidal-contrast -size -sketch -smush -solarize -sparse-color
+-splice -spread -statistic -stretch -stroke -strokewidth -style -support -swap
+-swirl -texture -threshold -thumbnail -tile -tile-offset -tint -transparent
+-transparent-color -treedepth -type -undercolor -units -unsharp -vignette
+-virtual-pixel -wave -weight -white-point -white-threshold -write
+""".split()
 
 
 skip_next = False
